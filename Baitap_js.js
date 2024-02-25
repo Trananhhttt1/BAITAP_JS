@@ -257,187 +257,227 @@ const orders = [
   },
 ];
 
-// =========1=========.
-let categoryHome = products.filter(function (item) {
-  return item.category === "Home";
-});
-console.log(categoryHome);
+// // 1. hiển thị list product có category là 'Home'
+// let categoryHome = products.filter(function (item) {
+//   return item.category === "Home";
+// });
+// console.log(categoryHome);
 
-// =========2=========.
-let expensiveProducts = products
-  .filter(function (item) {
-    return item.price > 50;
-  })
-  .sort(function (a, b) {
-    return a.price - b.price;
-  });
-console.log(expensiveProducts);
+// // 2. hiển thị list product có price > 50 và sắp xếp sản phẩm có giá từ cao xuống thấp
 
-// ==========3=========.
-let listOrder = orders.filter(function (item) {
-  let userEmmaDavis = users.find(function (user) {
-    return user.name === "Emma Davis";
-  });
-  return item.userId === userEmmaDavis.id;
+// let expensiveProducts = products
+//   .filter(function (item) {
+//     return item.price > 50;
+//   })
+//   .sort(function (a, b) {
+//     return a.price - b.price;
+//   });
+// console.log(expensiveProducts);
+
+// //3. hiển thị list order của Emma Davis (gợi ý: dùng 'Emma Davis' để tìm userId, dùng userId để lọc danh sách order)
+// let listOrder = orders.filter(function (item) {
+//   let userEmmaDavis = users.find(function (user) {
+//     return user.name === "Emma Davis";
+//   });
+//   return item.userId === userEmmaDavis.id;
+// });
+// console.log(listOrder);
+
+// // 4. tính tổng tiền bill của Emma Davis (gợi ý: dùng reduce)
+// //lấy id của user Emma Davis xuất hiện lần đầu tiên
+// let idEmmaDavis = users.find(function (user) {
+//   return user.name === "Emma Davis 1";
+// })?.id;
+
+// //trong orders lấy ra tất cả các order có userId = id của user Emma Davis
+// let orderEmmaDavis = orders.filter(function (order) {
+//   return order.userId === idEmmaDavis;
+// });
+
+// let totalBiil = orderEmmaDavis.reduce(function (total, item) {
+//   return (
+//     total +
+//     item.quantity *
+//       //láy giá của sản phẩm xuất hiện lần đầu tiên
+//       products.find(function (product) {
+//         return item.productId === product.id;
+//       }).price
+//   );
+// }, 0);
+// console.log(totalBiil);
+
+// //5. hiển thị top 3 users chi tiêu mạnh nhất
+// let userOrders = [];
+// users.forEach(function (user) {
+//   userOrders.push(
+//     orders.filter(function (order) {
+//       return order.userId === user.id;
+//     })
+//   );
+// });
+
+// let userTotal = userOrders.map(function (userOrder) {
+//   for (var i = 0; i < userOrder.length; i++) {
+//     let total = userOrder.reduce(function (userOrderTotal, item) {
+//       return (
+//         userOrderTotal +
+//         item.quantity *
+//           products.find(function (product) {
+//             return product.id === item.productId;
+//           }).price
+//       );
+//     }, 0);
+//     return [{ ...userOrder[i], totalBill: total }];
+//   }
+// });
+// let top3Uer = userTotal
+//   .flat()
+//   .sort(function (a, b) {
+//     return b.totalBill - a.totalBill;
+//   })
+//   .slice(0, 3);
+// console.log(top3Uer);
+
+// //6. so sánh tổng tiền bill của Emily Johnson và Emma Davis
+//lấy id của user Emma Davis xuất hiện lần đầu tiên
+// let idEmmaDavis = users.find(function (user) {
+//   return user.name === "Emma Davis";
+// }).id;
+
+// //trong orders lấy ra tất cả các order có userId = id của user Emma Davis
+// let orderEmmaDavis = orders.filter(function (order) {
+//   return order.userId === idEmmaDavis;
+// });
+
+// let totalBiilEmmaDavis = orderEmmaDavis.reduce(function (total, item) {
+//   return (
+//     total +
+//     item.quantity *
+//       //láy giá của sản phẩm xuất hiện lần đầu tiên
+//       products.find(function (product) {
+//         return item.productId === product.id;
+//       }).price
+//   );
+// }, 0);
+
+// console.log("Emma Davis", totalBiilEmmaDavis);
+
+// let idEmilyJohnson = users.find(function (user) {
+//   return user.name === "Emily Johnson";
+// }).id;
+
+// //trong orders lấy ra tất cả các order có userId = id của user EmilyJohnson
+// let orderEmilyJohnson = orders.filter(function (order) {
+//   return order.userId === idEmilyJohnson;
+// });
+
+// let totalBiilEmilyJohnson = orderEmilyJohnson.reduce(function (total, item) {
+//   return (
+//     total +
+//     item.quantity *
+//       //láy giá của sản phẩm xuất hiện lần đầu tiên
+//       products.find(function (product) {
+//         return item.productId === product.id;
+//       }).price
+//   );
+// }, 0);
+// console.log("Emily Johnson", totalBiilEmilyJohnson);
+
+// let compareUer =
+//   totalBiilEmmaDavis > totalBiilEmilyJohnson ? "Emma Davis" : "Emily Johnson";
+// console.log(compareUer);
+
+// // 7. kiểm tra xem có phải tất cả user đều có bill > 400
+// let userOrders = [];
+// users.forEach(function (user) {
+//   userOrders.push(
+//     orders.filter(function (order) {
+//       return order.userId === user.id;
+//     })
+//   );
+// });
+
+// let userTotal = userOrders.map(function (userOrder) {
+//   for (var i = 0; i < userOrder.length; i++) {
+//     let total = userOrder.reduce(function (userOrderTotal, item) {
+//       return (
+//         userOrderTotal +
+//         item.quantity *
+//           products.find(function (product) {
+//             return product.id === item.productId;
+//           }).price
+//       );
+//     }, 0);
+//     return [{ ...userOrder[i], totalBill: total }];
+//   }
+// });
+// let top3Uer = userTotal.flat().sort(function (a, b) {
+//   return b.totalBill - a.totalBill;
+// });
+
+// let checkBill = top3Uer.every(function (item) {
+//   return item.totalBill > 400;
+// })
+//   ? true
+//   : false;
+
+// console.log("tất cả user đều có bill > 400 là: ", checkBill);
+
+// // 8. hiển thị top 3 sản phẩm đc mua nhiều nhất
+// let top3Products = products.map(function (product) {
+//   return {
+//     ...product,
+//     totalQuanity: orders.reduce(function (totalQuanity, order) {
+//       if (order.productId === product.id) {
+//         return totalQuanity + order.quantity;
+//       }
+//       return totalQuanity;
+//     }, 0),
+//   };
+// });
+// console.log(
+//   top3Products
+//     .sort(function (a, b) {
+//       return b.totalQuanity - a.totalQuanity;
+//     })
+//     .slice(0, 3)
+// );
+
+//9.Tìm danh sách sản phảm cùng được mua bới user2 và user3
+let listOrder = orders.filter(function (order) {
+  return order.userId === 2 || order.userId === 3;
 });
 console.log(listOrder);
 
-// ===========4=========.
-lấy id của user Emma Davis xuất hiện lần đầu tiên
-let idEmmaDavis = users.find(function (user) {
-  return user.name === "Emma Davis";
-}).id;
-
-//trong orders lấy ra tất cả các order có userId = id của user Emma Davis
-let orderEmmaDavis = orders.filter(function (order) {
-  return order.userId === idEmmaDavis;
-});
-
-let totalBiil = orderEmmaDavis.reduce(function (total, item) {
-  return (
-    total +
-    item.quantity *
-      //láy giá của sản phẩm xuất hiện lần đầu tiên
-      products.find(function (product) {
-        return item.productId === product.id;
-      }).price
-  );
-}, 0);
-console.log(totalBiil);
-
-// ===========5==========
-let userOrders = [];
-users.forEach(function (user) {
-  userOrders.push(
-    orders.filter(function (order) {
-      return order.userId === user.id;
-    })
-  );
-});
-
-let userTotal = userOrders.map(function (userOrder) {
-  for (var i = 0; i < userOrder.length; i++) {
-    let total = userOrder.reduce(function (userOrderTotal, item) {
-      return (
-        userOrderTotal +
-        item.quantity *
-          products.find(function (product) {
-            return product.id === item.productId;
-          }).price
-      );
-    }, 0);
-    return [{ ...userOrder[i], totalBill: total }];
+const productsBoughtByBoth = listOrder.reduce((acc, curr) => {
+  if (!acc[curr.productId]) {
+    acc[curr.productId] = 1; // Đánh dấu sản phẩm này đã được mua bởi ít nhất một trong hai user
+  } else {
+    acc[curr.productId]++; // Tăng số lần xuất hiện của sản phẩm nếu đã được mua bởi cả hai user
   }
-});
-let top3Uer = userTotal
-  .flat()
-  .sort(function (a, b) {
-    return b.totalBill - a.totalBill;
-  })
-  .slice(0, 3);
-console.log(top3Uer);
 
-// =============6============
-// lấy id của user Emma Davis xuất hiện lần đầu tiên
-let idEmmaDavis = users.find(function (user) {
-  return user.name === "Emma Davis";
-}).id;
+  return acc;
+}, {});
 
-//trong orders lấy ra tất cả các order có userId = id của user Emma Davis
-let orderEmmaDavis = orders.filter(function (order) {
-  return order.userId === idEmmaDavis;
-});
-
-let totalBiilEmmaDavis = orderEmmaDavis.reduce(function (total, item) {
-  return (
-    total +
-    item.quantity *
-      //láy giá của sản phẩm xuất hiện lần đầu tiên
-      products.find(function (product) {
-        return item.productId === product.id;
-      }).price
-  );
-}, 0);
-
-console.log("Emma Davis", totalBiilEmmaDavis);
-
-let idEmilyJohnson = users.find(function (user) {
-  return user.name === "Emily Johnson";
-}).id;
-
-//trong orders lấy ra tất cả các order có userId = id của user EmilyJohnson
-let orderEmilyJohnson = orders.filter(function (order) {
-  return order.userId === idEmilyJohnson;
-});
-
-let totalBiilEmilyJohnson = orderEmilyJohnson.reduce(function (total, item) {
-  return (
-    total +
-    item.quantity *
-      //láy giá của sản phẩm xuất hiện lần đầu tiên
-      products.find(function (product) {
-        return item.productId === product.id;
-      }).price
-  );
-}, 0);
-console.log("Emily Johnson", totalBiilEmilyJohnson);
-
-let compareUer =
-  totalBiilEmmaDavis > totalBiilEmilyJohnson ? "Emma Davis" : "Emily Johnson";
-console.log(compareUer);
-
-// ==========7============
-let userOrders = [];
-users.forEach(function (user) {
-  userOrders.push(
-    orders.filter(function (order) {
-      return order.userId === user.id;
-    })
-  );
-});
-
-let userTotal = userOrders.map(function (userOrder) {
-  for (var i = 0; i < userOrder.length; i++) {
-    let total = userOrder.reduce(function (userOrderTotal, item) {
-      return (
-        userOrderTotal +
-        item.quantity *
-          products.find(function (product) {
-            return product.id === item.productId;
-          }).price
-      );
-    }, 0);
-    return [{ ...userOrder[i], totalBill: total }];
+console.log(productsBoughtByBoth);
+const productsBoughtByBothIds = Object.keys(productsBoughtByBoth).filter(
+  function (productID) {
+    return productsBoughtByBoth[productID] === 2;
   }
-});
-let top3Uer = userTotal.flat().sort(function (a, b) {
-  return b.totalBill - a.totalBill;
-});
-
-let checkBill = top3Uer.every(function (item) {
-  return item.totalBill > 400;
-})
-  ? true
-  : false;
-
-console.log("tất cả user đều có bill > 400 là: ", checkBill);
-
-// ===========8=============
-let top3Products = products.map(function (product) {
-  return {
-    ...product,
-    totalQuanity: orders.reduce(function (totalQuanity, order) {
-      if (order.productId === product.id) {
-        return totalQuanity + order.quantity;
-      }
-      return totalQuanity;
-    }, 0),
-  };
-});
-console.log(
-  top3Products
-    .sort(function (a, b) {
-      return b.totalQuanity - a.totalQuanity;
-    })
-    .slice(0, 3)
 );
+
+let informationProductsBoughtByBothUser23 = [];
+if (productsBoughtByBothIds.length > 0) {
+  for (var i = 0; i < productsBoughtByBothIds.length; i++) {
+    informationProductsBoughtByBothUser23.push(
+      products.find(function (product) {
+        if (product.id == productsBoughtByBothIds[i]) {
+          return product;
+        }
+      })
+    );
+  }
+  console.log(informationProductsBoughtByBothUser23);
+} else {
+  console.log("không có sản phẩm nào được user2 và user3 cùng mua");
+}
