@@ -477,7 +477,10 @@ if (productsBoughtByBothIds.length > 0) {
       })
     );
   }
-  console.log(informationProductsBoughtByBothUser23);
+  console.log(
+    "Danh Sách sản phẩm được user2 và user3 cùng mua",
+    informationProductsBoughtByBothUser23
+  );
 } else {
   console.log("không có sản phẩm nào được user2 và user3 cùng mua");
 }
